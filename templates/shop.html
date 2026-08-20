@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Hardware Catalog | LUMEN</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="{{ url_for('index') if url_for else 'index.html' }}" class="brand-logo">
+        <span class="logo-icon">L</span>
+        <span>LUMEN</span>
+      </a>
+
+      <!-- Mobile menu toggle (CSS-only, no JavaScript) -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+
+      <div class="nav-collapse">
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('index') if url_for else 'index.html' }}" class="nav-link">Home</a></li>
+            <li><a href="{{ url_for('shop') if url_for else 'shop.html' }}" class="nav-link active">Shop</a></li>
+            <li><a href="{{ url_for('contact') if url_for else 'contact.html' }}" class="nav-link">Contact & FAQ</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-search">
+          <form action="{{ url_for('shop') if url_for else 'shop.html' }}" method="GET" class="search-form">
+            <input type="text" name="search" class="search-input" value="{{ search_query if search_query else '' }}" placeholder="Search products...">
+            <button type="submit" class="search-btn" aria-label="Search">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <a href="{{ url_for('cart_view') if url_for else 'cart.html' }}" class="cart-icon-btn" title="View Cart" aria-label="View cart">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+          <span class="cart-badge">{{ cart_count if cart_count is defined else 2 }}</span>
+        </a>
+        <label for="nav-toggle" class="nav-burger" title="Menu">
+          <span></span><span></span><span></span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Shop Layout -->
+  <div class="container shop-layout">
+    
+    <!-- Sidebar Filter -->
+    <aside class="filter-sidebar">
+      <!-- Retractable filter panel (CSS-only, no JavaScript) -->
+      <input type="checkbox" id="filter-toggle" class="filter-toggle" aria-label="Toggle filters">
+      <label for="filter-toggle" class="filter-toggle-btn">
+        <span class="filter-toggle-label">
+          <span class="filter-chevron" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          Filters
+        </span>
+      </label>
+
+      <form action="{{ url_for('shop') if url_for else 'shop.html' }}" method="GET" class="filter-panel">
+        <div class="filter-group">
+          <h4 class="filter-title">Categories</h4>
+          <ul class="filter-list">
+            <li class="filter-item">
+              <label><input type="radio" name="category" value="" {% if not current_category %}checked{% endif %} onchange="this.form.submit()"> All Products</label>
+            </li>
+            <li class="filter-item">
+              <label><input type="radio" name="category" value="audio" {% if current_category == 'audio' %}checked{% endif %} onchange="this.form.submit()"> Audio Devices</label>
+            </li>
+            <li class="filter-item">
+              <label><input type="radio" name="category" value="wearables" {% if current_category == 'wearables' %}checked{% endif %} onchange="this.form.submit()"> Wearables</label>
+            </li>
+            <li class="filter-item">
+              <label><input type="radio" name="category" value="accessories" {% if current_category == 'accessories' %}checked{% endif %} onchange="this.form.submit()"> Accessories</label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="filter-group">
+          <h4 class="filter-title">Price Range</h4>
+          <ul class="filter-list">
+            <li class="filter-item"><label><input type="checkbox" checked> Under $100</label></li>
+            <li class="filter-item"><label><input type="checkbox" checked> $100 - $250</label></li>
+            <li class="filter-item"><label><input type="checkbox" checked> Above $250</label></li>
+          </ul>
+        </div>
+
+        <div class="filter-group">
+          <h4 class="filter-title">Rating</h4>
+          <ul class="filter-list">
+            <li class="filter-item"><label><input type="radio" name="rating" checked> ★ 4.5 & Above</label></li>
+            <li class="filter-item"><label><input type="radio" name="rating"> ★ 4.0 & Above</label></li>
+          </ul>
+        </div>
+
+        <button type="submit" class="btn btn-secondary btn-full btn-sm">Apply Filters</button>
+      </form>
+    </aside>
+
+    <!-- Product Grid Column -->
+    <main>
+      <div class="shop-results-head">
+        <h2>
+          {% if current_category %}
+            {{ current_category }} products
+          {% elif search_query %}
+            Results for "{{ search_query }}"
+          {% else %}
+            All products
+          {% endif %}
+        </h2>
+        <span class="shop-results-count">{{ products|length if products is defined else 0 }} products</span>
+      </div>
+
+      <div class="product-grid">
+        {% if products %}
+          {% for p in products %}
+          <div class="product-card">
+            <div class="product-thumb">
+              {% if p.tag %}<span class="product-tag">{{ p.tag }}</span>{% endif %}
+              <a href="{{ url_for('product_detail', product_id=p.id) if url_for else 'product-detail.html' }}">
+                <img src="{{ url_for('static', filename=p.image_url.replace('static/', '')) if url_for else p.image_url }}" alt="{{ p.title }}">
+              </a>
+            </div>
+            <div class="product-details">
+              <span class="product-category">{{ p.category }}</span>
+              <h3 class="product-name">
+                <a href="{{ url_for('product_detail', product_id=p.id) if url_for else 'product-detail.html' }}">{{ p.title }}</a>
+              </h3>
+              <div class="product-rating">★ {{ p.rating }} <span class="rating-count">({{ p.reviews_count }} reviews)</span></div>
+              <div class="product-footer">
+                <div>
+                  <span class="product-price">${{ "%.2f"|format(p.price) }}</span>
+                  {% if p.old_price %}<span class="product-price-old">${{ "%.2f"|format(p.old_price) }}</span>{% endif %}
+                </div>
+                <form action="{{ url_for('cart_add') if url_for else 'cart.html' }}" method="POST">
+                  <input type="hidden" name="product_id" value="{{ p.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="btn btn-primary btn-sm">+ Add</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <!-- Static HTML Fallback Cards -->
+          <div class="product-card">
+            <div class="product-thumb">
+              <span class="product-tag">BESTSELLER</span>
+              <a href="product-detail.html"><img src="static/images/aura-pro-headphones.svg" alt="Aura Pro"></a>
+            </div>
+            <div class="product-details">
+              <span class="product-category">AUDIO</span>
+              <h3 class="product-name"><a href="product-detail.html">Aura Pro Wireless Headphones</a></h3>
+              <div class="product-rating">★ 4.9 <span class="rating-count">(342 reviews)</span></div>
+              <div class="product-footer">
+                <div><span class="product-price">$249.99</span><span class="product-price-old">$299.99</span></div>
+                <a href="cart.html" class="btn btn-primary btn-sm">+ Add</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-thumb">
+              <span class="product-tag">NEW</span>
+              <a href="product-detail.html"><img src="static/images/chronos-x-smartwatch.svg" alt="Chronos X"></a>
+            </div>
+            <div class="product-details">
+              <span class="product-category">WEARABLES</span>
+              <h3 class="product-name"><a href="product-detail.html">Chronos X Smartwatch</a></h3>
+              <div class="product-rating">★ 4.8 <span class="rating-count">(215 reviews)</span></div>
+              <div class="product-footer">
+                <div><span class="product-price">$199.99</span><span class="product-price-old">$249.99</span></div>
+                <a href="cart.html" class="btn btn-primary btn-sm">+ Add</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-thumb">
+              <span class="product-tag">HOT</span>
+              <a href="product-detail.html"><img src="static/images/apex-rgb-keyboard.svg" alt="Apex Keyboard"></a>
+            </div>
+            <div class="product-details">
+              <span class="product-category">ACCESSORIES</span>
+              <h3 class="product-name"><a href="product-detail.html">Apex RGB Mechanical Keyboard</a></h3>
+              <div class="product-rating">★ 4.9 <span class="rating-count">(188 reviews)</span></div>
+              <div class="product-footer">
+                <div><span class="product-price">$149.99</span><span class="product-price-old">$179.99</span></div>
+                <a href="cart.html" class="btn btn-primary btn-sm">+ Add</a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 LUMEN Technologies Inc. All rights reserved.</p>
+        <p>Built with Pure HTML & CSS</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

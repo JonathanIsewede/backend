@@ -1,0 +1,56 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'orders' %}
+
+{% block title %}Orders{% endblock %}
+{% block page_title %}Orders{% endblock %}
+{% block page_subtitle %}{{ orders|length }} order(s){% if current_status %} with status "{{ current_status }}"{% endif %}{% endblock %}
+
+{% block content %}
+
+  <div class="admin-toolbar">
+    <a href="{{ url_for('admin_orders') }}" class="admin-chip {% if not current_status %}active{% endif %}">All</a>
+    {% for s in statuses %}
+      <a href="{{ url_for('admin_orders', status=s) }}" class="admin-chip {% if current_status == s %}active{% endif %}">{{ s }}</a>
+    {% endfor %}
+  </div>
+
+  {% if orders %}
+    <div class="table-scroll">
+    <table class="cart-table admin-table">
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Customer</th>
+          <th>Destination</th>
+          <th>Payment</th>
+          <th>Placed</th>
+          <th>Status</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in orders %}
+        <tr>
+          <td><a href="{{ url_for('admin_order_detail', order_id=o.id) }}" class="admin-link">#{{ o.id }}</a></td>
+          <td>
+            {{ o.customer_name }}
+            <span class="admin-cell-sub">{{ o.customer_email }}</span>
+          </td>
+          <td>
+            {{ o.city }}
+            <span class="admin-cell-sub">{{ o.address }}</span>
+          </td>
+          <td>{{ o.payment_method }}</td>
+          <td>{{ o.created_at }}</td>
+          <td><span class="admin-badge admin-badge-{{ o.status|lower }}">{{ o.status }}</span></td>
+          <td>${{ "%.2f"|format(o.total_amount) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  {% else %}
+    <p class="admin-empty">No orders to show.</p>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'products' %}
+
+{% block title %}Products{% endblock %}
+{% block page_title %}Products{% endblock %}
+{% block page_subtitle %}{{ products|length }} item(s) in the catalog{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{{ url_for('admin_product_new') }}" class="btn btn-primary btn-sm">+ New Product</a>
+{% endblock %}
+
+{% block content %}
+
+  <form method="GET" action="{{ url_for('admin_products') }}" class="admin-toolbar">
+    <input type="text" name="search" class="form-control" value="{{ search_query }}" placeholder="Search by title or category...">
+    <button type="submit" class="btn btn-secondary btn-sm">Search</button>
+    {% if search_query %}
+      <a href="{{ url_for('admin_products') }}" class="btn btn-outline btn-sm">Reset</a>
+    {% endif %}
+  </form>
+
+  {% if products %}
+    <div class="table-scroll">
+    <table class="cart-table admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in products %}
+        <tr>
+          <td>#{{ p.id }}</td>
+          <td>
+            <div class="cart-product-cell">
+              <img class="cart-item-img" src="{{ url_for('static', filename=p.image_url.replace('static/', '')) }}" alt="{{ p.title }}">
+              <div>
+                <a href="{{ url_for('product_detail', product_id=p.id) }}" class="admin-link">{{ p.title }}</a>
+                {% if p.tag %}<span class="admin-cell-sub">{{ p.tag }}</span>{% endif %}
+              </div>
+            </div>
+          </td>
+          <td class="admin-cap">{{ p.category }}</td>
+          <td>
+            ${{ "%.2f"|format(p.price) }}
+            {% if p.old_price %}<span class="admin-cell-sub">was ${{ "%.2f"|format(p.old_price) }}</span>{% endif %}
+          </td>
+          <td>
+            <span class="admin-badge {% if p.stock == 0 %}admin-badge-cancelled{% elif p.stock < 20 %}admin-badge-pending{% else %}admin-badge-delivered{% endif %}">
+              {{ p.stock }}
+            </span>
+          </td>
+          <td>
+            <div class="admin-row-actions">
+              <a href="{{ url_for('admin_product_edit', product_id=p.id) }}" class="btn btn-outline btn-sm">Edit</a>
+              <form method="POST" action="{{ url_for('admin_product_delete', product_id=p.id) }}"
+                    onsubmit="return confirm('Delete &quot;{{ p.title }}&quot;? This cannot be undone.');">
+                <button type="submit" class="btn btn-sm admin-btn-danger">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  {% else %}
+    <p class="admin-empty">No products found{% if search_query %} for "{{ search_query }}"{% endif %}.</p>
+  {% endif %}
+
+{% endblock %}

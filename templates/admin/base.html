@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Admin{% endblock %} | LUMEN</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body class="admin-body">
+
+  <div class="admin-shell">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <a href="{{ url_for('admin_dashboard') }}" class="brand-logo admin-brand">
+        <span class="logo-icon">L</span>
+        <span>LUMEN <small class="admin-brand-tag">Admin</small></span>
+      </a>
+
+      <nav class="admin-nav">
+        <a href="{{ url_for('admin_dashboard') }}" class="admin-nav-link {% if active_page == 'dashboard' %}active{% endif %}">
+          <span class="admin-nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span> Dashboard
+        </a>
+        <a href="{{ url_for('admin_products') }}" class="admin-nav-link {% if active_page == 'products' %}active{% endif %}">
+          <span class="admin-nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span> Products
+        </a>
+        <a href="{{ url_for('admin_orders') }}" class="admin-nav-link {% if active_page == 'orders' %}active{% endif %}">
+          <span class="admin-nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l4 4v16H6V2z"/><path d="M14 2v4h4"/><path d="M9 12h6"/><path d="M9 16h6"/></svg></span> Orders
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <a href="{{ url_for('index') }}" class="admin-nav-link"><span class="admin-nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1 12h16L21 9"/><path d="M5 9l7-7 7 7"/><path d="M9 21v-6h6v6"/></svg></span> View Storefront</a>
+        <a href="{{ url_for('admin_logout') }}" class="admin-nav-link"><span class="admin-nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></span> Sign Out</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <h1 class="admin-page-title">{% block page_title %}Dashboard{% endblock %}</h1>
+          <p class="admin-page-subtitle">{% block page_subtitle %}{% endblock %}</p>
+        </div>
+        <div class="admin-topbar-actions">{% block topbar_actions %}{% endblock %}</div>
+      </header>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="admin-flashes">
+            {% for category, message in messages %}
+              <div class="admin-flash admin-flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+  </div>
+
+</body>
+</html>

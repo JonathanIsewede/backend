@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ product.title if product else 'Aura Pro Wireless Headphones' }} | LUMEN</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="{{ url_for('index') if url_for else 'index.html' }}" class="brand-logo">
+        <span class="logo-icon">L</span>
+        <span>LUMEN</span>
+      </a>
+
+      <!-- Mobile menu toggle (CSS-only, no JavaScript) -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+
+      <div class="nav-collapse">
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('index') if url_for else 'index.html' }}" class="nav-link">Home</a></li>
+            <li><a href="{{ url_for('shop') if url_for else 'shop.html' }}" class="nav-link">Shop</a></li>
+            <li><a href="{{ url_for('contact') if url_for else 'contact.html' }}" class="nav-link">Contact & FAQ</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <a href="{{ url_for('cart_view') if url_for else 'cart.html' }}" class="cart-icon-btn" title="View Cart" aria-label="View cart">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+          <span class="cart-badge">{{ cart_count if cart_count is defined else 2 }}</span>
+        </a>
+        <label for="nav-toggle" class="nav-burger" title="Menu">
+          <span></span><span></span><span></span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- Product Detail Section -->
+  <div class="container product-detail-grid">
+    
+    <!-- Gallery Column -->
+    <div class="product-gallery">
+      <div class="main-image-box">
+        <img src="{{ url_for('static', filename=product.image_url.replace('static/', '')) if product else 'static/images/aura-pro-headphones.svg' }}" alt="Product Image">
+      </div>
+      <div class="gallery-thumbs">
+        <div class="thumb-item active"><img src="{{ url_for('static', filename=product.image_url.replace('static/', '')) if product else 'static/images/aura-pro-headphones.svg' }}" alt="Thumb 1"></div>
+        <div class="thumb-item"><img src="{{ url_for('static', filename='images/chronos-x-smartwatch.svg') if url_for else 'static/images/chronos-x-smartwatch.svg' }}" alt="Thumb 2"></div>
+        <div class="thumb-item"><img src="{{ url_for('static', filename='images/apex-rgb-keyboard.svg') if url_for else 'static/images/apex-rgb-keyboard.svg' }}" alt="Thumb 3"></div>
+      </div>
+    </div>
+
+    <!-- Product Details Column -->
+    <div class="product-info-col">
+      <span class="product-category">{{ product.category if product else 'AUDIO' }}</span>
+      <h1>{{ product.title if product else 'Aura Pro Wireless Headphones' }}</h1>
+
+      <div class="product-rating pdp-rating">
+        ★ {{ product.rating if product else '4.9' }} 
+        <span class="rating-count">({{ product.reviews_count if product else '342' }} verified reviews)</span>
+        <span class="stock-status">In stock ({{ product.stock if product else '45' }} left)</span>
+      </div>
+
+      <div class="price-tag-lg">
+        ${{ "%.2f"|format(product.price) if product else '249.99' }}
+        {% if product and product.old_price %}
+        <span class="product-price-old price-old-lg">${{ "%.2f"|format(product.old_price) }}</span>
+        {% endif %}
+      </div>
+
+      <p class="pdp-description">
+        {{ product.description if product else 'Active noise-canceling wireless headphones with 40-hour battery life, spatial audio, and premium memory foam earcups for long-session comfort.' }}
+      </p>
+
+      <!-- Add to Cart Form -->
+      <form action="{{ url_for('cart_add') if url_for else 'cart.html' }}" method="POST">
+        <input type="hidden" name="product_id" value="{{ product.id if product else '1' }}">
+        
+        <!-- Color Selector -->
+        <div class="variant-picker">
+          <div class="variant-title">Choose Color:</div>
+          <div class="variant-options">
+            <label class="variant-btn selected"><input type="radio" name="color" value="matte-black" checked> Matte Black</label>
+            <label class="variant-btn"><input type="radio" name="color" value="silver-white"> Midnight Silver</label>
+            <label class="variant-btn"><input type="radio" name="color" value="deep-violet"> Deep Violet</label>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <div>
+            <label class="variant-title">Quantity:</label>
+            <input type="number" name="quantity" value="1" min="1" max="10" class="qty-input">
+          </div>
+          <div class="action-cell">
+            <button type="submit" class="btn btn-primary btn-full btn-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+              Add to cart
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Technical Specifications Table -->
+      <div class="pdp-specs">
+        <h3>Technical specifications</h3>
+        <div class="table-scroll">
+        <table class="cart-table spec-table">
+          <tr>
+            <td>Driver Size</td>
+            <td>40mm Custom Titanium Drivers</td>
+          </tr>
+          <tr>
+            <td>Frequency Response</td>
+            <td>10Hz - 40,000Hz (Hi-Res Audio Certified)</td>
+          </tr>
+          <tr>
+            <td>Battery Life</td>
+            <td>Up to 40 Hours (ANC On) / Fast Charge 10min = 5 Hours</td>
+          </tr>
+          <tr>
+            <td>Connectivity</td>
+            <td>Bluetooth 5.3 + 3.5mm Aux Line</td>
+          </tr>
+        </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Related Products Section -->
+  <section class="section related-section">
+    <div class="container">
+      <h3>You might also like</h3>
+      <div class="product-grid">
+        {% if related_products %}
+          {% for rp in related_products %}
+          <div class="product-card">
+            <div class="product-thumb">
+              <a href="{{ url_for('product_detail', product_id=rp.id) if url_for else 'product-detail.html' }}">
+                <img src="{{ url_for('static', filename=rp.image_url.replace('static/', '')) if url_for else rp.image_url }}" alt="{{ rp.title }}">
+              </a>
+            </div>
+            <div class="product-details">
+              <h3 class="product-name"><a href="{{ url_for('product_detail', product_id=rp.id) if url_for else 'product-detail.html' }}">{{ rp.title }}</a></h3>
+              <div class="product-footer">
+                <span class="product-price">${{ "%.2f"|format(rp.price) }}</span>
+                <a href="{{ url_for('product_detail', product_id=rp.id) if url_for else 'product-detail.html' }}" class="btn btn-outline btn-sm">View Details</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="product-card">
+            <div class="product-thumb"><img src="static/images/chronos-x-smartwatch.svg" alt="Chronos X Smartwatch"></div>
+            <div class="product-details">
+              <h3 class="product-name">Chronos X Smartwatch</h3>
+              <div class="product-footer">
+                <span class="product-price">$199.99</span>
+                <a href="product-detail.html" class="btn btn-outline btn-sm">View Details</a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 LUMEN Technologies Inc. All rights reserved.</p>
+        <p>Built with Pure HTML & CSS</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

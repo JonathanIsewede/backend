@@ -1,0 +1,125 @@
+{% extends "admin/base.html" %}
+{% set active_page = 'dashboard' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Store performance at a glance{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{{ url_for('admin_product_new') }}" class="btn btn-primary btn-sm">+ New Product</a>
+{% endblock %}
+
+{% block content %}
+
+  <div class="admin-stat-grid">
+    <div class="admin-stat-card">
+      <span class="admin-stat-label">Total Revenue</span>
+      <span class="admin-stat-value">${{ "%.2f"|format(stats.revenue) }}</span>
+      <span class="admin-stat-note">Across all orders</span>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-label">Orders</span>
+      <span class="admin-stat-value">{{ stats.orders }}</span>
+      <span class="admin-stat-note">Placed to date</span>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-label">Products</span>
+      <span class="admin-stat-value">{{ stats.products }}</span>
+      <span class="admin-stat-note">Live in catalog</span>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-label">Low Stock</span>
+      <span class="admin-stat-value {% if stats.low_stock %}admin-stat-warning{% endif %}">{{ stats.low_stock }}</span>
+      <span class="admin-stat-note">Under 20 units</span>
+    </div>
+  </div>
+
+  <div class="admin-panel-grid">
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <h3 class="admin-panel-title">Recent Orders</h3>
+        <a href="{{ url_for('admin_orders') }}" class="admin-panel-link">View all</a>
+      </div>
+
+      {% if recent_orders %}
+        <div class="table-scroll">
+        <table class="cart-table admin-table">
+          <thead>
+            <tr><th>Order</th><th>Customer</th><th>Status</th><th>Total</th></tr>
+          </thead>
+          <tbody>
+            {% for o in recent_orders %}
+            <tr>
+              <td><a href="{{ url_for('admin_order_detail', order_id=o.id) }}" class="admin-link">#{{ o.id }}</a></td>
+              <td>
+                {{ o.customer_name }}
+                <span class="admin-cell-sub">{{ o.customer_email }}</span>
+              </td>
+              <td><span class="admin-badge admin-badge-{{ o.status|lower }}">{{ o.status }}</span></td>
+              <td>${{ "%.2f"|format(o.total_amount) }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+      {% else %}
+        <p class="admin-empty">No orders yet.</p>
+      {% endif %}
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <h3 class="admin-panel-title">Low Stock</h3>
+        <a href="{{ url_for('admin_products') }}" class="admin-panel-link">Manage</a>
+      </div>
+
+      {% if low_stock_products %}
+        <ul class="admin-list">
+          {% for p in low_stock_products %}
+          <li class="admin-list-row">
+            <div>
+              <a href="{{ url_for('admin_product_edit', product_id=p.id) }}" class="admin-link">{{ p.title }}</a>
+              <span class="admin-cell-sub">{{ p.category }}</span>
+            </div>
+            <span class="admin-badge {% if p.stock == 0 %}admin-badge-cancelled{% else %}admin-badge-pending{% endif %}">
+              {{ p.stock }} left
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="admin-empty">Every product is well stocked.</p>
+      {% endif %}
+    </section>
+
+    <section class="admin-panel admin-panel-wide">
+      <div class="admin-panel-head">
+        <h3 class="admin-panel-title">Best Sellers</h3>
+      </div>
+
+      {% if top_products %}
+        <div class="table-scroll">
+        <table class="cart-table admin-table">
+          <thead>
+            <tr><th>Product</th><th>Units Sold</th><th>Revenue</th></tr>
+          </thead>
+          <tbody>
+            {% for row in top_products %}
+            <tr>
+              <td>{{ row.product_name }}</td>
+              <td>{{ row.units }}</td>
+              <td>${{ "%.2f"|format(row.revenue) }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+      {% else %}
+        <p class="admin-empty">No sales data yet.</p>
+      {% endif %}
+    </section>
+
+  </div>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed! | LUMEN</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="{{ url_for('index') if url_for else 'index.html' }}" class="brand-logo">
+        <span class="logo-icon">L</span>
+        <span>LUMEN</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Success Card -->
+  <div class="container success-wrap">
+    <div class="success-check">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+    </div>
+
+    <h1>Order confirmed</h1>
+    <p>
+      Thank you for shopping with LUMEN. We're preparing your order for dispatch.
+    </p>
+
+    <div class="summary-card success-card">
+      <div class="success-meta">
+        <div>
+          <span class="success-meta-label">Order reference</span>
+          <div class="success-meta-value accent">#{{ order_id if order_id else 'LUM-84920' }}</div>
+        </div>
+        <div>
+          <span class="success-meta-label">Estimated delivery</span>
+          <div class="success-meta-value">3–5 business days</div>
+        </div>
+      </div>
+
+      <div class="success-steps">
+        <div class="success-step is-current">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>
+          <p>Order received</p>
+        </div>
+        <div class="success-step is-muted">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.36.01.69.13.95.36" /><path d="M21 16v5"/><path d="M21 21h-5"/></svg>
+          <p>Processing</p>
+        </div>
+        <div class="success-step is-muted">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h15v10H1z"/><path d="M16 10h4l3 3v4h-7"/><circle cx="6" cy="18" r="1.6"/><circle cx="19" cy="18" r="1.6"/></svg>
+          <p>Out for delivery</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-actions">
+      <a href="{{ url_for('shop') if url_for else 'shop.html' }}" class="btn btn-primary">Return to catalog</a>
+      <a href="{{ url_for('contact') if url_for else 'contact.html' }}" class="btn btn-secondary">Customer support</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 LUMEN Technologies Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

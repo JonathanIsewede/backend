@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Sign In | LUMEN</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body class="admin-body">
+
+  <div class="admin-login-wrap">
+    <div class="admin-login-card">
+      <a href="{{ url_for('index') }}" class="brand-logo admin-login-brand">
+        <span class="logo-icon">L</span>
+        <span>LUMEN</span>
+      </a>
+
+      <h2 class="admin-login-title">Admin console</h2>
+      <p class="admin-login-sub">
+        Sign in to manage products and orders.
+      </p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="admin-flashes">
+            {% for category, message in messages %}
+              <div class="admin-flash admin-flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="{{ url_for('admin_login') }}">
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label>
+          <input class="form-control" type="text" id="username" name="username" placeholder="admin" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input class="form-control" type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+      </form>
+
+      <p class="admin-login-hint">Demo credentials: <code>admin</code> / <code>lumen123</code></p>
+    </div>
+  </div>
+
+</body>
+</html>

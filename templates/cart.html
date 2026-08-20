@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart | LUMEN</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="{{ url_for('index') }}" class="brand-logo">
+        <span class="logo-icon">L</span>
+        <span>LUMEN</span>
+      </a>
+
+      <!-- Mobile menu toggle (CSS-only, no JavaScript) -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+
+      <div class="nav-collapse">
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+            <li><a href="{{ url_for('shop') }}" class="nav-link">Shop</a></li>
+            <li><a href="{{ url_for('contact') }}" class="nav-link">Contact & FAQ</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <a href="{{ url_for('cart_view') }}" class="cart-icon-btn active" title="View Cart" aria-label="View cart">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+          <span class="cart-badge">{{ cart_count }}</span>
+        </a>
+        <label for="nav-toggle" class="nav-burger" title="Menu">
+          <span></span><span></span><span></span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- Cart Section -->
+  <div class="container cart-grid">
+    
+    <!-- Cart Items Table -->
+    <div>
+      <div class="cart-head">
+        <h2>Your shopping bag</h2>
+        {% if items and items|length > 0 %}
+        <form action="{{ url_for('cart_clear') }}" method="POST">
+          <button type="submit" class="btn btn-danger-outline btn-sm">Clear all items</button>
+        </form>
+        {% endif %}
+      </div>
+
+      {% if items and items|length > 0 %}
+        <table class="cart-table responsive-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td data-label="">
+                <div class="cart-product-cell">
+                  <img src="{{ url_for('static', filename=item.image_url.replace('static/', '')) }}" alt="{{ item.title }}" class="cart-item-img">
+                  <div>
+                    <div class="cart-item-title">{{ item.title }}</div>
+                    <span class="cart-item-sub">Category: {{ item.category|upper }}</span>
+                  </div>
+                </div>
+              </td>
+              <td data-label="Price">${{ "%.2f"|format(item.price) }}</td>
+              <td data-label="Quantity">
+                <form action="{{ url_for('cart_update') }}" method="POST" class="qty-form">
+                  <input type="hidden" name="product_id" value="{{ item.id }}">
+                  <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="10" class="qty-input qty-input-sm">
+                  <button type="submit" class="btn btn-secondary btn-sm" title="Update quantity" aria-label="Update quantity">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+                  </button>
+                </form>
+              </td>
+              <td data-label="Total" class="cart-total-cell">${{ "%.2f"|format(item.total) }}</td>
+              <td data-label="">
+                <form action="{{ url_for('cart_remove') }}" method="POST">
+                  <input type="hidden" name="product_id" value="{{ item.id }}">
+                  <button type="submit" class="btn btn-danger-outline btn-sm">Remove</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <!-- Empty Cart Banner -->
+        <div class="summary-card cart-empty">
+          <div class="cart-empty-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+          </div>
+          <h3>Your shopping bag is empty</h3>
+          <p>Nothing in the bag yet — the catalog is waiting.</p>
+          <a href="{{ url_for('shop') }}" class="btn btn-primary">Shop the catalog &rarr;</a>
+        </div>
+      {% endif %}
+
+      <div class="cart-foot">
+        <a href="{{ url_for('shop') }}" class="btn btn-secondary">&larr; Continue shopping</a>
+      </div>
+    </div>
+
+    <!-- Summary Sidebar -->
+    <div>
+      <div class="summary-card">
+        <h3 class="summary-title">Order summary</h3>
+        
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>${{ "%.2f"|format(subtotal) }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Express Shipping</span>
+          <span>${{ "%.2f"|format(shipping) }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Estimated Tax (8%)</span>
+          <span>${{ "%.2f"|format(tax) }}</span>
+        </div>
+
+        <div class="summary-row total">
+          <span>Grand Total</span>
+          <span>${{ "%.2f"|format(total) }}</span>
+        </div>
+
+        <!-- Promo Code Form -->
+        <div class="promo-wrap">
+          <form action="#" method="POST" class="search-form">
+            <input type="text" placeholder="Promo code (e.g. LUMEN10)" class="search-input">
+            <button type="button" class="btn btn-secondary btn-sm">Apply</button>
+          </form>
+        </div>
+
+        {% if items and items|length > 0 %}
+        <a href="{{ url_for('checkout') }}" class="btn btn-primary btn-full">Proceed to checkout &rarr;</a>
+        {% else %}
+        <a href="{{ url_for('shop') }}" class="btn btn-secondary btn-full">Add products to check out</a>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 LUMEN Technologies Inc. All rights reserved.</p>
+        <p>Built with Pure HTML & CSS</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

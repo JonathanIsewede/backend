@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Support | LUMEN</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="{{ url_for('index') if url_for else 'index.html' }}" class="brand-logo">
+        <span class="logo-icon">L</span>
+        <span>LUMEN</span>
+      </a>
+
+      <!-- Mobile menu toggle (CSS-only, no JavaScript) -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+
+      <div class="nav-collapse">
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('index') if url_for else 'index.html' }}" class="nav-link">Home</a></li>
+            <li><a href="{{ url_for('shop') if url_for else 'shop.html' }}" class="nav-link">Shop</a></li>
+            <li><a href="{{ url_for('contact') if url_for else 'contact.html' }}" class="nav-link active">Contact & FAQ</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <a href="{{ url_for('cart_view') if url_for else 'cart.html' }}" class="cart-icon-btn" title="View Cart" aria-label="View cart">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+          <span class="cart-badge">{{ cart_count if cart_count is defined else 2 }}</span>
+        </a>
+        <label for="nav-toggle" class="nav-burger" title="Menu">
+          <span></span><span></span><span></span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contact & FAQ Grid -->
+  <div class="container">
+
+    <div class="contact-hero-inner">
+      <h1>We're here to help</h1>
+      <p>Questions about an order or a product? Send us a message or check the FAQ below.</p>
+    </div>
+
+    <div class="checkout-grid">
+
+      <!-- Contact Form -->
+      <div class="summary-card">
+        <h2 class="checkout-step">Send us a message</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" placeholder="Sarah Jenkins" required class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" placeholder="sarah@example.com" required class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" placeholder="Order status / Technical question" required class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea rows="5" placeholder="How can we assist you today?" required class="form-control"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">Submit Message &rarr;</button>
+        </form>
+      </div>
+
+      <!-- FAQ Accordion Column -->
+      <div>
+        <h2 class="checkout-step">Frequently asked questions</h2>
+
+        <details class="faq-item" open>
+          <summary class="faq-question">What is your shipping policy?</summary>
+          <div class="faq-answer">
+            We offer free express 2-day shipping on all domestic orders over $75. International orders typically arrive within 5-7 business days via DHL Express.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">How does the 30-day money-back guarantee work?</summary>
+          <div class="faq-answer">
+            If you are not 100% satisfied with your hardware within 30 days of receipt, simply initiate a return via your account or contact support for a prepaid return shipping label and full refund.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">What warranty comes with LUMEN products?</summary>
+          <div class="faq-answer">
+            All LUMEN hardware products come standard with a 2-year full manufacturer warranty covering defects, battery performance degrade, and structural craftsmanship.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Can I update or cancel my order after placing it?</summary>
+          <div class="faq-answer">
+            Orders are processed immediately by our fulfillment center. You may request a cancellation within 1 hour of placing the order by reaching out to our team.
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 LUMEN Technologies Inc. All rights reserved.</p>
+        <p>Built with Pure HTML & CSS</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

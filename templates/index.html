@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMEN | Audio, wearables &amp; desk gear</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+
+  <!-- Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="{{ url_for('index') if url_for else 'index.html' }}" class="brand-logo">
+        <span class="logo-icon">L</span>
+        <span>LUMEN</span>
+      </a>
+
+      <!-- Mobile menu toggle (CSS-only, no JavaScript) -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+
+      <div class="nav-collapse">
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('index') if url_for else 'index.html' }}" class="nav-link active">Home</a></li>
+            <li><a href="{{ url_for('shop') if url_for else 'shop.html' }}" class="nav-link">Shop</a></li>
+            <li><a href="{{ url_for('contact') if url_for else 'contact.html' }}" class="nav-link">Contact & FAQ</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-search">
+          <form action="{{ url_for('shop') if url_for else 'shop.html' }}" method="GET" class="search-form">
+            <input type="text" name="search" class="search-input" placeholder="Search products...">
+            <button type="submit" class="search-btn" aria-label="Search">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <a href="{{ url_for('cart_view') if url_for else 'cart.html' }}" class="cart-icon-btn" title="View Cart" aria-label="View cart">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+          <span class="cart-badge">{{ cart_count if cart_count is defined else 2 }}</span>
+        </a>
+        <label for="nav-toggle" class="nav-burger" title="Menu">
+          <span></span><span></span><span></span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="product-tag hero-tag">Spring 2026 collection</span>
+        <h1>Considered tech for everyday life</h1>
+        <p>A focused line of audio, wearables and desk gear. Engineered plainly, priced honestly, built to last.</p>
+        <div class="hero-actions">
+          <a href="{{ url_for('shop') if url_for else 'shop.html' }}" class="btn btn-primary">Shop the catalog &rarr;</a>
+          <a href="#featured" class="btn btn-secondary">Featured items</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-image-wrapper">
+          <img src="{{ url_for('static', filename='images/hero.png') if url_for else 'static/images/hero.png' }}" alt="Lumen Hero Banner">
+        </div>
+        <div class="hero-floating-card">
+          <span class="hero-floating-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+          </span>
+          <div>
+            <div class="hero-floating-title">Aura Pro ANC</div>
+            <div class="hero-floating-sub">Wireless headphones &middot; $249.99</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Shop by category</h2>
+          <p class="section-subtitle">Three lines: audio, wearables and desk accessories.</p>
+        </div>
+        <a href="{{ url_for('shop') if url_for else 'shop.html' }}" class="btn btn-outline btn-sm">View all products</a>
+      </div>
+
+      <div class="category-grid">
+        <a href="{{ url_for('shop', category='audio') if url_for else 'shop.html?category=audio' }}" class="category-card">
+          <img src="{{ url_for('static', filename='images/headphones.png') if url_for else 'static/images/headphones.png' }}" alt="Audio">
+          <div class="category-card-content">
+            <h3 class="category-title">Premium Audio</h3>
+            <span class="category-count">5 Products</span>
+          </div>
+        </a>
+
+        <a href="{{ url_for('shop', category='wearables') if url_for else 'shop.html?category=wearables' }}" class="category-card">
+          <img src="{{ url_for('static', filename='images/watch.png') if url_for else 'static/images/watch.png' }}" alt="Wearables">
+          <div class="category-card-content">
+            <h3 class="category-title">Smart Wearables</h3>
+            <span class="category-count">3 Products</span>
+          </div>
+        </a>
+
+        <a href="{{ url_for('shop', category='accessories') if url_for else 'shop.html?category=accessories' }}" class="category-card">
+          <img src="{{ url_for('static', filename='images/keyboard.png') if url_for else 'static/images/keyboard.png' }}" alt="Accessories">
+          <div class="category-card-content">
+            <h3 class="category-title">Desk Accessories</h3>
+            <span class="category-count">4 Products</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="section" id="featured">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Featured products</h2>
+          <p class="section-subtitle">A few of the line, straight from the catalog.</p>
+        </div>
+      </div>
+
+      <div class="product-grid">
+        {% if products %}
+          {% for p in products %}
+          <div class="product-card">
+            <div class="product-thumb">
+              {% if p.tag %}<span class="product-tag">{{ p.tag }}</span>{% endif %}
+              <a href="{{ url_for('product_detail', product_id=p.id) if url_for else 'product-detail.html' }}">
+                <img src="{{ url_for('static', filename=p.image_url.replace('static/', '')) if url_for else p.image_url }}" alt="{{ p.title }}">
+              </a>
+            </div>
+            <div class="product-details">
+              <span class="product-category">{{ p.category }}</span>
+              <h3 class="product-name">
+                <a href="{{ url_for('product_detail', product_id=p.id) if url_for else 'product-detail.html' }}">{{ p.title }}</a>
+              </h3>
+              <div class="product-rating">
+                ★ {{ p.rating }} <span class="rating-count">({{ p.reviews_count }} reviews)</span>
+              </div>
+              <div class="product-footer">
+                <div>
+                  <span class="product-price">${{ "%.2f"|format(p.price) }}</span>
+                  {% if p.old_price %}<span class="product-price-old">${{ "%.2f"|format(p.old_price) }}</span>{% endif %}
+                </div>
+                <form action="{{ url_for('cart_add') if url_for else 'cart.html' }}" method="POST">
+                  <input type="hidden" name="product_id" value="{{ p.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="btn btn-primary btn-sm">+ Add</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <!-- Static HTML Fallback Cards -->
+          <div class="product-card">
+            <div class="product-thumb">
+              <span class="product-tag">BESTSELLER</span>
+              <a href="product-detail.html">
+                <img src="static/images/aura-pro-headphones.svg" alt="Aura Pro Wireless Headphones">
+              </a>
+            </div>
+            <div class="product-details">
+              <span class="product-category">AUDIO</span>
+              <h3 class="product-name"><a href="product-detail.html">Aura Pro Wireless Headphones</a></h3>
+              <div class="product-rating">★ 4.9 <span class="rating-count">(342 reviews)</span></div>
+              <div class="product-footer">
+                <div><span class="product-price">$249.99</span><span class="product-price-old">$299.99</span></div>
+                <a href="cart.html" class="btn btn-primary btn-sm">+ Add</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-thumb">
+              <span class="product-tag">NEW</span>
+              <a href="product-detail.html">
+                <img src="static/images/chronos-x-smartwatch.svg" alt="Chronos X Smartwatch">
+              </a>
+            </div>
+            <div class="product-details">
+              <span class="product-category">WEARABLES</span>
+              <h3 class="product-name"><a href="product-detail.html">Chronos X Smartwatch</a></h3>
+              <div class="product-rating">★ 4.8 <span class="rating-count">(215 reviews)</span></div>
+              <div class="product-footer">
+                <div><span class="product-price">$199.99</span><span class="product-price-old">$249.99</span></div>
+                <a href="cart.html" class="btn btn-primary btn-sm">+ Add</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-thumb">
+              <span class="product-tag">HOT</span>
+              <a href="product-detail.html">
+                <img src="static/images/apex-rgb-keyboard.svg" alt="Apex RGB Mechanical Keyboard">
+              </a>
+            </div>
+            <div class="product-details">
+              <span class="product-category">ACCESSORIES</span>
+              <h3 class="product-name"><a href="product-detail.html">Apex RGB Mechanical Keyboard</a></h3>
+              <div class="product-rating">★ 4.9 <span class="rating-count">(188 reviews)</span></div>
+              <div class="product-footer">
+                <div><span class="product-price">$149.99</span><span class="product-price-old">$179.99</span></div>
+                <a href="cart.html" class="btn btn-primary btn-sm">+ Add</a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Strip -->
+  <section class="features-strip">
+    <div class="container features-grid">
+      <div class="feature-box">
+        <div class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4"/><path d="M12 11v10"/></svg>
+        </div>
+        <div class="feature-info">
+          <h4>Free shipping</h4>
+          <p>On domestic orders over $75</p>
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5V11c0 5-3.5 8.5-8 10.5C7.5 19.5 4 16 4 11V5.5L12 2z"/></svg>
+        </div>
+        <div class="feature-info">
+          <h4>2-year warranty</h4>
+          <p>Full replacement protection</p>
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.5"/><path d="M18 4v2.5H15.5"/><path d="M20 12a8 8 0 0 1-14 5.5"/><path d="M6 20v-2.5h2.5"/></svg>
+        </div>
+        <div class="feature-info">
+          <h4>30-day returns</h4>
+          <p>Hassle-free money back</p>
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.7 7.2L3 21l1.8-6.3A8 8 0 1 1 21 12z"/></svg>
+        </div>
+        <div class="feature-info">
+          <h4>Support</h4>
+          <p>Replies within one business day</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="#" class="brand-logo">
+            <span class="logo-icon">L</span>
+            <span>LUMEN</span>
+          </a>
+          <p>A small catalog of audio, wearables and desk gear. Built to be used for years, not seasons.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('shop') if url_for else 'shop.html' }}">Shop All</a></li>
+            <li><a href="{{ url_for('shop', category='audio') if url_for else 'shop.html?category=audio' }}">Audio Devices</a></li>
+            <li><a href="{{ url_for('shop', category='wearables') if url_for else 'shop.html?category=wearables' }}">Smart Wearables</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('contact') if url_for else 'contact.html' }}">Contact Us</a></li>
+            <li><a href="{{ url_for('contact') if url_for else 'contact.html' }}">FAQ & Returns</a></li>
+            <li><a href="#">Shipping Info</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 LUMEN Technologies Inc. All rights reserved.</p>
+        <p>Built with Pure HTML & CSS</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

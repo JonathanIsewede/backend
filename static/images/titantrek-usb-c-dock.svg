@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F5F2EC"/>
+  <rect x="24" y="24" width="752" height="552" fill="none" stroke="#E4DED2" stroke-width="2"/>
+  <path d="M24 96v-24h24M776 96v-24h-24M24 504v24h24M776 504v24h-24" fill="none" stroke="#E4DED2" stroke-width="2"/>
+  <text x="56" y="66" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="4" fill="#6E6559">LUMEN CATALOGUE</text>
+  <text x="744" y="66" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="3" fill="#6E6559" text-anchor="end">ACCESSORIES · 11</text>
+  <text x="56" y="522" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="26" font-weight="600" fill="#201C17">TitanTrek 11-in-1 USB-C Dock</text>
+  <text x="744" y="522" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="500" fill="#6E6559" text-anchor="end">№ 11</text>
+  <g stroke="#201C17" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+
+    <rect x="268" y="232" width="264" height="144" rx="14"/>
+    <rect x="288" y="250" width="22" height="10" rx="3"/>
+    <rect x="318" y="250" width="22" height="10" rx="3"/>
+    <rect x="288" y="278" width="34" height="12" rx="4"/>
+    <rect x="330" y="278" width="34" height="12" rx="4"/>
+    <rect x="476" y="344" width="34" height="22" rx="4" fill="#C33D22" stroke="none"/>
+    <rect x="288" y="344" width="120" height="22" rx="5"/>
+    <circle cx="492" cy="262" r="5"/>
+    <circle cx="512" cy="262" r="5"/>
+  </g>
+</svg>

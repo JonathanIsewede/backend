@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F5F2EC"/>
+  <rect x="24" y="24" width="752" height="552" fill="none" stroke="#E4DED2" stroke-width="2"/>
+  <path d="M24 96v-24h24M776 96v-24h-24M24 504v24h24M776 504v24h-24" fill="none" stroke="#E4DED2" stroke-width="2"/>
+  <text x="56" y="66" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="4" fill="#6E6559">LUMEN CATALOGUE</text>
+  <text x="744" y="66" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="3" fill="#6E6559" text-anchor="end">ACCESSORIES · 05</text>
+  <text x="56" y="522" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="26" font-weight="600" fill="#201C17">CyberDeck Ergo Mouse</text>
+  <text x="744" y="522" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="500" fill="#6E6559" text-anchor="end">№ 05</text>
+  <g stroke="#201C17" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+
+    <path d="M330 318 q0 -92 70 -92 q70 0 70 92 q0 92 -70 110 q-70 -18 -70 -110z"/>
+    <path d="M382 240 v26"/>
+    <circle cx="414" cy="300" r="10" fill="#C33D22" stroke="none"/>
+    <path d="M330 340 q28 -14 56 -6"/>
+  </g>
+</svg>

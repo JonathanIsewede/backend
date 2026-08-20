@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F5F2EC"/>
+  <rect x="24" y="24" width="752" height="552" fill="none" stroke="#E4DED2" stroke-width="2"/>
+  <path d="M24 96v-24h24M776 96v-24h-24M24 504v24h24M776 504v24h-24" fill="none" stroke="#E4DED2" stroke-width="2"/>
+  <text x="56" y="66" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="4" fill="#6E6559">LUMEN CATALOGUE</text>
+  <text x="744" y="66" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="3" fill="#6E6559" text-anchor="end">AUDIO · 08</text>
+  <text x="56" y="522" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="26" font-weight="600" fill="#201C17">Aurora Studio Monitor Headset</text>
+  <text x="744" y="522" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="500" fill="#6E6559" text-anchor="end">№ 08</text>
+  <g stroke="#201C17" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+
+    <path d="M296 288 q0 -74 104 -74 q104 0 104 74"/>
+    <rect x="252" y="280" width="84" height="120" rx="36"/>
+    <rect x="262" y="300" width="64" height="80" rx="28" fill="#C33D22" stroke="none"/>
+    <circle cx="294" cy="340" r="9" fill="#F5F2EC" stroke="none"/>
+    <path d="M336 300 q-24 90 4 168 M340 468 q-10 14 10 18 q22 2 14 -16"/>
+    <circle cx="352" cy="480" r="10"/>
+  </g>
+</svg>

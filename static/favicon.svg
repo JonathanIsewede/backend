@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#F5F2EC"/>
+  <rect x="3" y="3" width="58" height="58" rx="11" fill="none" stroke="#201C17" stroke-width="2.5"/>
+  <text x="32" y="34" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" fill="#C33D22" text-anchor="middle" dominant-baseline="central">L</text>
+  <circle cx="51" cy="13" r="4" fill="#C33D22"/>
+</svg>

@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 
 app = Flask(
     __name__,
-    static_folder='../frontend/static',
+    static_folder='static',
     template_folder='templates'
 )
 app.secret_key = 'lumen_ecommerce_super_secret_key'

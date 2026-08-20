@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F5F2EC"/>
+  <rect x="24" y="24" width="752" height="552" fill="none" stroke="#E4DED2" stroke-width="2"/>
+  <path d="M24 96v-24h24M776 96v-24h-24M24 504v24h24M776 504v24h-24" fill="none" stroke="#E4DED2" stroke-width="2"/>
+  <text x="56" y="66" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="4" fill="#6E6559">LUMEN CATALOGUE</text>
+  <text x="744" y="66" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="3" fill="#6E6559" text-anchor="end">WEARABLES · 02</text>
+  <text x="56" y="522" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="26" font-weight="600" fill="#201C17">Chronos X Smartwatch</text>
+  <text x="744" y="522" font-family="Archivo, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="500" fill="#6E6559" text-anchor="end">№ 02</text>
+  <g stroke="#201C17" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+
+    <rect x="348" y="168" width="104" height="284" rx="52"/>
+    <rect x="320" y="228" width="160" height="184" rx="28"/>
+    <circle cx="400" cy="320" r="44" fill="#C33D22" stroke="none"/>
+    <circle cx="400" cy="320" r="13" fill="#F5F2EC" stroke="none"/>
+    <path d="M400 266 v-10 M400 364 v10 M346 320 h-10 M454 320 h10"/>
+    <rect x="480" y="272" width="16" height="72" rx="8"/>
+  </g>
+</svg>

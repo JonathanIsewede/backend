@@ -1,4 +1,5 @@
 import os
+import json
 import sqlite3
 from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for, session, flash
@@ -197,6 +198,19 @@ def checkout():
         payment = request.form.get('payment_method', 'Credit Card')
         
         cart = session.get('cart', {})
+        cart_payload = request.form.get('cart', '')
+        if cart_payload:
+            try:
+                submitted_items = json.loads(cart_payload)
+                cart = {
+                    str(item['id']): {'quantity': max(int(item.get('qty', 1)), 1)}
+                    for item in submitted_items
+                    if item.get('id') is not None
+                }
+                session['cart'] = cart
+                session.modified = True
+            except (TypeError, ValueError, json.JSONDecodeError):
+                cart = session.get('cart', {})
         if not cart:
             return redirect(url_for('shop'))
             
